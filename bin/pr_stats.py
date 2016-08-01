@@ -1,8 +1,8 @@
+#!/usr/bin/env python3
+
 # Retrieve github pull requests statistics for a repo
 #
 # (c) 2016 Teresa Bradbury
-
-#!/usr/bin/env python3
 
 import requests
 import json
