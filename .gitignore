@@ -1,4 +1,6 @@
 *.csv
+*.exe
+*.o
 
 ### PYTHON ###
 
