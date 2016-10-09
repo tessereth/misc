@@ -10,9 +10,15 @@ function relative_luminance(rgb_color) {
     return 0.2126 * linear_rgb(rgb_color.r) + 0.7152 * linear_rgb(rgb_color.g) + 0.0722 * linear_rgb(rgb_color.b);
 }
 
+// Relative Luminance 3D graph //
 var graph3d = null;
-var initial_camera = {horizontal: 1.0, vertical: 0.5, distance: 1.7};
 var current_fixed_values = null;
+
+var initial_camera = {horizontal: 1.0, vertical: 0.5, distance: 1.7};
+
+function reset_camera() {
+    graph3d.setCameraPosition(initial_camera);
+}
 
 function xy_to_rbg(x, y) {
     function red_val(x, y) {
@@ -27,7 +33,7 @@ function xy_to_rbg(x, y) {
     return {r: red_val(x, y), g: green_val(x, y), b: blue_val(x, y)};
 }
 
-function set_data(fixed_values) {
+function rl_set_data(fixed_values) {
     //console.log(fixed_values);
     current_fixed_values = fixed_values;
     var data = new vis.DataSet();
@@ -48,10 +54,6 @@ function set_data(fixed_values) {
     });
 }
 
-function format_label(x) {
-    return Math.round(x * 255).toString(16).toUpperCase();
-}
-
 function setup_relative_luminance(elem_id) {
     // specify options
     var options = {
@@ -64,8 +66,7 @@ function setup_relative_luminance(elem_id) {
         keepAspectRatio: true,
         verticalRatio: 0.5,
         //tooltip: true,
-        tooltip: tooltip_fn,
-        //xValueLabel: format_label,
+        tooltip: rl_tooltip,
         zLabel: 'Relative Luminance',
         cameraPosition: initial_camera,
     };
@@ -73,15 +74,11 @@ function setup_relative_luminance(elem_id) {
     // Instantiate our graph object.
     var container = document.getElementById(elem_id);
     graph3d = new vis.Graph3d(container);
-    set_data({blue: 0});
+    rl_set_data({blue: 0});
     graph3d.setOptions(options);
 }
 
-function reset_camera() {
-    graph3d.setCameraPosition(initial_camera);
-}
-
-function tooltip_fn(point) {
+function rl_tooltip(point) {
     var color = xy_to_rbg(point.x, point.y);
     function to_hex(val) { 
         var s = Math.round(val * 255).toString(16);
@@ -107,5 +104,61 @@ function update_fixed(elem_id, color) {
     }
     var fixed_values = {};
     fixed_values[color] = parseFloat(value);
-    set_data(fixed_values);
+    rl_set_data(fixed_values);
+}
+
+// linear RGB //
+
+// http://www.chartjs.org/docs/
+function setup_linear_rgb(elem_id) {
+    var dataset = [];
+    var steps = 32;
+    var inc = 1.0 / (steps - 1);
+    for (var x = 0.0; x <= 1.0; x += inc) {
+        dataset.push({x: x, y: linear_rgb(x)});
+    }    
+    var myLineChart = new Chart(document.getElementById(elem_id), {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: dataset,
+                label: 'Linear RGB',
+                fill: false,
+                borderColor: '#2020FF',
+                pointRadius: 0, // don't show points
+                pointHoverRadius: 0,
+            }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'regular RGB',
+                    },
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'linear RGB',
+                    },
+                }],
+            },
+            title: {
+                display: true,
+                text: 'Conversion of regular RGB to linear RGB',
+            },
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                enabled: false,
+            },
+            animation: {
+                duration: 0,
+            },
+        }
+    });
 }

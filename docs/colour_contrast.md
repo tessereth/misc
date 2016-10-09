@@ -11,7 +11,7 @@ to explain that in some detail.
 First of all, how is colour contrast calculated? 
 [Color contrast is defined by WCAG](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef) as
 
-<img alt="colour contrast equals L1 plus 0.05 over L2 plus 0.05" src="../images/formula_colour_contrast.png" height="70">
+<img alt="colour contrast equals L1 plus 0.05 over L2 plus 0.05" src="../images/formula_colour_contrast.png" style="height:3em !important">
 
 where
 
@@ -40,12 +40,13 @@ Now we have our red, green and blue values between 0 and 1, we need to convert t
 gamma-compressed RGB to linear RGB. 
 It's not super important how this is calculated, but the formula is
 
-<img alt="linear RGB formula" src="../images/formula_linear_rbg.png" height="100">
+<img alt="linear RGB formula" src="../images/formula_linear_rbg.png" style="height:5em !important">
 
 where `C` is each of the individual red, green and blue values.
 If I just look at that formula, I have no idea what it means. So here's a graph instead.
 
-<img alt="linear RGB graph" src="../images/graph_linear_rbg.png" height="300">
+<canvas id="linear_rbg_chart" width="400px" height="200px"></canvas>
+<script type="text/javascript">window.onload = setup_linear_rgb('linear_rbg_chart')</script>
 
 It looks like someone has attached a piece of string to (0,0) and (1,1) but they left a bit too
 much slack and it's sagging a bit. Okay. As I said, it's not overly important to understand this formula
@@ -54,7 +55,7 @@ to understand colour contrast, but for a detailed explanation, see
 
 Now we have our linear RGB values, we can calculate the relative luminance as
 
-<img alt="relative luminance equals 0.2126 times R + 0.7152 times G + 0.0722 times B" src="../images/formula_relative_luminance.png" height="30">
+<img alt="relative luminance equals 0.2126 times R + 0.7152 times G + 0.0722 times B" src="../images/formula_relative_luminance.png" style="height:1em !important">
 
 So the relative luminance is the weighted average of the linear RBG values, with
 green having the highest weight, then red, then blue. This is because green light
