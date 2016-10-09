@@ -6,6 +6,6 @@ version controlled but don't really belong anywhere in particular.
 ## Building the docs
 
 ```
-pip install mkdocs
+pip install mkdocs mkdocs-cinder
 mkdocs serve
 ```

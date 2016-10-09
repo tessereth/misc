@@ -3,8 +3,9 @@ title: Interactive colour contrast
 ---
 
 <div id="visualization"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(setup_relative_luminance('visualization'))
+  window.onload = function() {setup_relative_luminance('visualization')};
 </script>
 
 <div id="controls">
