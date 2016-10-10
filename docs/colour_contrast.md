@@ -1,12 +1,15 @@
 Understanding colour contrast
 =============================
 
-The Web Content Accessibility Guidelines (WCAG) 2.0 requires that all text must have 
-a sufficiently different colour from the background colour. This is to ensure that everyone
-can read the text, even if they are colour blind. The
-[WCAG site defines what colour contrast values are required](https://www.w3.org/WAI/WCAG20/quickref/#visual-audio-contrast)
-but I've always wondered exactly what those numbers mean. This page tries
-to explain that in some detail.
+The Web Content Accessibility Guidelines (WCAG) 2.0 requires that all
+text must have a sufficiently different colour from the background
+colour. This is to ensure that everyone can read the text, even if
+they are colour blind. The [WCAG site defines what colour contrast
+values are
+required](https://www.w3.org/WAI/WCAG20/quickref/#visual-audio-contrast)
+but I've always wondered exactly what those numbers mean. This page
+tries to explain the maths behind it in some detail. For an
+interactive guide to colour contrast, see the [colour contrast interactive guide](colour_contrast_interactive).
 
 ## Colour contrast
 
