@@ -8,4 +8,5 @@ version controlled but don't really belong anywhere in particular.
 ```
 pip install mkdocs mkdocs-cinder
 mkdocs serve
+mkdocs gh-deploy --clean
 ```

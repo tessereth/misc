@@ -1,6 +1,7 @@
 *.csv
 *.exe
 *.o
+site
 
 ### PYTHON ###
 
