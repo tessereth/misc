@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Colour contrast - Misc Docs</title>
+
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Misc Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Colour contrast</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../colour_contrast_interactive/">Colour contrast interactive</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../colour_contrast_interactive/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#understanding-colour-contrast">Understanding colour contrast</a></li>
+        
+            <li class="second-level"><a href="#colour-contrast">Colour contrast</a></li>
+            
+        
+            <li class="second-level"><a href="#relative-luminance">Relative luminance</a></li>
+            
+        
+            <li class="second-level"><a href="#conclusion">Conclusion</a></li>
+            
+        
+            <li class="second-level"><a href="#references">References</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="understanding-colour-contrast">Understanding colour contrast</h1>
+<p>The Web Content Accessibility Guidelines (WCAG) 2.0 requires that all text must have 
+a sufficiently different colour from the background colour. This is to ensure that everyone
+can read the text, even if they are colour blind. The
+<a href="https://www.w3.org/WAI/WCAG20/quickref/#visual-audio-contrast">WCAG site defines what colour contrast values are required</a>
+but I've always wondered exactly what those numbers mean. This page tries
+to explain that in some detail.</p>
+<h2 id="colour-contrast">Colour contrast</h2>
+<p>First of all, how is colour contrast calculated? 
+<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef">Color contrast is defined by WCAG</a> as</p>
+<p><img alt="colour contrast equals L1 plus 0.05 over L2 plus 0.05" src="../images/formula_colour_contrast.png" style="height:3em !important"></p>
+<p>where</p>
+<ul>
+<li><code>L1</code> is the relative luminance of the lighter of the two colours, and</li>
+<li><code>L2</code> is the relative luminance of the darker of the two colours</li>
+</ul>
+<p>We will get to the question, "What is relative luminance?" in a moment but first we want
+to understand what this formula means. If we ignore the <code>+ 0.05</code> sections, then it's just a
+ratio between the relative luminance of each colour. A colour contrast of 2 means
+one colour has twice the relative luminance of the other. Coming back to the <code>+ 0.05</code>, black
+has a relative luminance of zero. You can't divide by zero and if you have two colours 
+that are almost but not quite black, one might be three times as bright as the other and they
+still look basically the same. So adding 0.05 to both values stabilises the formula
+around zero.</p>
+<h2 id="relative-luminance">Relative luminance</h2>
+<p>Now we need to tackle relative luminance. Relative luminance represents how bright a colour
+is relative to other colours and there are a few steps in calculating it.
+Colours are often represented as three numbers between 0 and 255, one for red, one for green,
+and one for blue. While this is relatively convenient for defining colours, it's not so
+convenient when doing math with them. So first of all, the colours values are converted to numbers
+between 0 and 1 by dividing by 255. 0 means "none of this colour" and 1 means "as much of this
+colour as you can".</p>
+<p>Now we have our red, green and blue values between 0 and 1, we need to convert them from what's known as
+gamma-compressed RGB (or what I'm going to call normal RGB) to linear RGB. 
+It's not super important how this is calculated, but the formula is</p>
+<p><img alt="linear RGB formula" src="../images/formula_linear_rbg.png" style="height:5em !important"></p>
+<p>where <code>C</code> is each of the individual red, green and blue values.
+If I just look at that formula, I have no idea what it means. So here's a graph instead.</p>
+<canvas id="linear_rbg_chart" width="400px" height="200px"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+
+<script type="text/javascript">window.onload = function() {setup_linear_rgb('linear_rbg_chart')}</script>
+
+<p>It looks like someone has drawn a line from (0,0) to (1,1) and then just 
+tugged it down a bit. Okay. As I said, it's not overly important to understand this formula
+to understand colour contrast, but for a detailed explanation, see 
+<a href="https://en.wikipedia.org/wiki/SRGB">the wikipedia page for sRGB</a>.</p>
+<p>Now we have our linear RGB values, we can calculate the relative luminance as</p>
+<p><img alt="relative luminance equals 0.2126 times R + 0.7152 times G + 0.0722 times B" src="../images/formula_relative_luminance.png" style="height:1em !important"></p>
+<p>So the relative luminance is the weighted average of the linear RGB values, with
+green having the highest weight, then red, then blue. This is because green light
+has the highest contribution to perceived brightness by humans.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The main reason to care about colour contrast is to ensure that the
+colours we choose have sufficiently high contrast.
+So when trying to increase the colour contrast of a pair of colours,
+it's worth noting that:</p>
+<ul>
+<li>Only the brightness of each colour matters, their relative hue does not</li>
+<li>Each of the three colour channels act independently</li>
+<li>Changing the green channel will have the greatest effect, then red, then blue</li>
+<li>Changing a brighter channel will have a greater effect than changing a darker one</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>WCAG 2.0<ul>
+<li>colour contrast guidelines (<a href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">https://www.w3.org/TR/WCAG20/#visual-audio-contrast</a>)</li>
+<li>definition of "contrast ratio" (<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef">https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef</a>)</li>
+<li>definition of "relative luminance" (<a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef">https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef</a>)</li>
+</ul>
+</li>
+<li>Wikipedia <ul>
+<li>relative luminance (<a href="https://en.wikipedia.org/wiki/Relative_luminance">https://en.wikipedia.org/wiki/Relative_luminance</a>)</li>
+<li>sRBG (<a href="https://en.wikipedia.org/wiki/SRGB">https://en.wikipedia.org/wiki/SRGB</a>)</li>
+</ul>
+</li>
+<li>Formulas produced by <a href="http://latex2png.com/">http://latex2png.com/</a></li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '..';
+    </script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/colour_contrast.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>
