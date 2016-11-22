@@ -12,6 +12,10 @@
 
 <img src="https://www.lucidchart.com/publicSegments/view/11858677-0236-4f3c-b363-1af93fa058b2/image.png" class="stretch"></img>
 
+Note:
+Source: 
+https://www.lucidchart.com/documents/edit/993bff1e-2d95-413f-8b57-1516a58d0699
+
 ---
 
 # CF CLI
@@ -30,11 +34,14 @@ cf <command> --help
 ```bash
 cf login -a https://api.system.staging.digital.gov.au \
   -u <email> -o <org> -s <space>
-cf target # show current target
-cf target -o <org> -s <space>
 ```
 
 `cf login` will prompt for information you don't provide
+
+```bash
+cf target # show current target
+cf target -o <org> -s <space>
+```
 
 ---
 
@@ -50,7 +57,9 @@ cf push <app-name>
 * Uploads all files in the current directory
 * Use `.cfignore` to ignore files (`bundle/vendor` etc)
 
-        ln -s .gitignore .cfignore
+```bash
+ln -s .gitignore .cfignore
+```
 
 ---
 
@@ -61,14 +70,103 @@ Set all the things!
 [https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html)
 
 ```yaml
-inherit: manifest-base.yml
+buildpack: staticfile_buildpack
+memory: 512M
+disk_quota: 256M
+applications:
+- name: <name>
+```
+
+* `cf buildpacks` - list builtin buildpacks
+* `cf app <name>` - show current memory/disk usage
+
+--
+
+# Inheritance
+
+`mainfest.yml`
+
+```yaml
 buildpack: staticfile_buildpack
 memory: 512M
 disk_quota: 256M
 ```
 
-* `cf buildpacks` - list builtin buildpacks
-* `cf app <name>` - show current memory/disk usage
+`manifest-prod.yml`
+
+```yaml
+inherit: manifest.yml
+applications:
+- name: app-blue
+- name: app-green
+```
+
+---
+
+# Services
+
+Backing services for your app. Includes:
+
+* Databases
+* Redis
+* etc, etc...
+
+Persist between app updates
+
+Live in a particular space
+
+--
+
+# Manage services
+
+List service types
+
+```bash
+cf marketplace
+```
+
+List service instances
+
+```bash
+cf services
+```
+
+Create a service instance
+
+```bash
+cf create-service <service-type> <service-plan> <service-name>
+```
+
+--
+
+# Bind services
+
+Bind to your app
+
+```bash
+cf bind-service <app-name> <service-name>
+```
+
+with `manifest.yml`
+
+```yaml
+services:
+  - <service-name>
+```
+
+Access service info (eg credentials) with the VCAP_SERVICES environment variable
+
+```ruby
+services = JSON.parse(ENV['VCAP_SERVICES'])
+```
+
+--
+
+# Manage services
+
+with the [pivotal app manager](https://apps.system.staging.digital.gov.au/)
+
+with the [18F app manager](https://app-manager-staging.apps.staging.digital.gov.au/)
 
 ---
 
@@ -93,7 +191,7 @@ with the [pivotal app manager](https://apps.system.staging.digital.gov.au/)
 
 # Environment variables
 
-With [user provided services](https://docs.cloudfoundry.org/devguide/services/user-provided.html)
+with [user provided services](https://docs.cloudfoundry.org/devguide/services/user-provided.html)
 
 ```
 cf cups <service-name> -p '{"<variable-name>":"<variable-value>"}'
@@ -112,9 +210,9 @@ value = s['user-provided'][0]['credentials']['<variable-name>']
 
 # User Management
 
-Creating and deleting users -> done by an admin
+Creating and deleting users &rarr; done by an admin
 
-Managing permissions -> done by you
+Managing permissions &rarr; done by you
 
 --
 
@@ -147,4 +245,10 @@ cf space-users
 cf [un]set-space-role
 ```
 
-with the [18F app manager dashboard](https://app-manager-staging.apps.staging.digital.gov.au/)
+with the [18F app manager](https://app-manager-staging.apps.staging.digital.gov.au/)
+
+---
+
+# Next time
+
+Routes and domains
