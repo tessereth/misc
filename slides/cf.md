@@ -6,11 +6,46 @@
 
 ---
 
+# What is cloud foundry?
+
+--
+
+## Question: 
+
+I've written this web app and I want it on the internet.  
+What do I do?
+
+## Answer: 
+
+Cloud foundry!
+
+--
+
+Software as a Service
+
+&varr;
+
+## Platform as a Service
+
+&varr;
+
+Infrastructure as a Service
+
+---
+
+# Managing your apps
+
+* command line
+* [pivotal app manager](https://apps.system.staging.digital.gov.au/)
+* [18F app manager](https://app-manager-staging.apps.staging.digital.gov.au/)
+
+---
+
 # Structure
 
 --
 
-<img src="https://www.lucidchart.com/publicSegments/view/11858677-0236-4f3c-b363-1af93fa058b2/image.png" class="stretch"></img>
+<img src="https://www.lucidchart.com/publicSegments/view/cb86352a-98dd-4873-a7fd-098d568c488a/image.png" class="stretch"></img>
 
 Note:
 Source: 
