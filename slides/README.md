@@ -7,3 +7,6 @@ To present, run
     ln -sf /path/to/misc/slides/cf.html index.html
     ln -sf /path/to/misc/slides/cf.md cf.md
     npm start
+
+To push to cloud foundry, use the Gruntfile and manifest here and
+hard link or copy the slide files.
