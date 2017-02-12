@@ -1,4 +1,5 @@
 class Service < ApplicationRecord
+  include ActiveModel::Serializers::JSON
   has_many :service_songs
   has_many :songs, through: :service_songs
 
