@@ -16,7 +16,7 @@
     - else
       %li Other: #{count}
 
-%p Most fequently sung songs
+%p Most frequently sung songs
 - song_counts = ServiceSong.group(:song).order('count_all DESC').count
 - min_songs = 10
 - to_count = song_counts.values[min_songs - 1]
