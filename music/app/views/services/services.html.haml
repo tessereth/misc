@@ -1,13 +1,13 @@
 %h1 Services
 
-%p Total services: #{Service.count}
-%p First service: #{Service.order(:date).first.date.to_formatted_s(:long)}
-%p Last service: #{Service.order(:date).last.date.to_formatted_s(:long)}
+%p Total services: #{@services.length}
+%p First service: #{@services.first.date.to_formatted_s(:long)}
+%p Last service: #{@services.last.date.to_formatted_s(:long)}
 
-- Service.order(:date).each do |service|
+- @services.each do |service|
   %h2 #{service.date}
   %ol
-    - service.songs.order('service_songs.position').each do |song|
+    - service.songs.each do |song|
       - if song.book
         %li #{song.book.acronym} #{song.number} #{song.title}
       - else

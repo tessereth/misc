@@ -22,8 +22,11 @@ class ServicesController < ApplicationController
 
   def songs
     @cutoff = params[:cutoff].to_f
+    @books = Book.includes(songs: :services).all
+    @other_songs = Song.where(book: nil).order(:title).includes(:services)
   end
 
   def services
+    @services = Service.includes(songs: :book).order(:date)
   end
 end
