@@ -29,4 +29,7 @@ class ServicesController < ApplicationController
   def services
     @services = Service.includes(songs: :book).order(:date)
   end
+
+  def stats
+  end
 end

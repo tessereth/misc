@@ -1,0 +1,17 @@
+%ul.links
+  - if !current_page?(stats_path)
+    %li= link_to('stats', stats_path)
+  - else
+    %li stats
+  - if !current_page?(services_path)
+    %li= link_to('services', services_path)
+  - else
+    %li services
+  - if !current_page?(songs_path)
+    %li= link_to('songs', songs_path)
+  - else
+    %li songs
+  - if !current_page?(new_service_path)
+    %li= link_to('new service', new_service_path)
+  - else
+    %li new service
