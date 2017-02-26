@@ -1,0 +1,29 @@
+%h1 Songs
+- Book.all.each do |book|
+  %h2 #{book.title}
+  %table
+    %thead
+      %tr
+        %th Num
+        %th Title
+        %th Frequency
+    %tbody
+      - book.songs.order(:number).each do |song|
+        -if song.services.count >= @cutoff
+          %tr
+            %td #{song.number}
+            %td #{song.title}
+            %td #{song.services.count}
+
+%h2 Other
+%table
+  %thead
+    %tr
+      %th Title
+      %th Frequency
+  %tbody
+    - Song.where(book: nil).order(:title).each do |song|
+      - if song.services.count >= @cutoff
+        %tr
+          %td #{song.title}
+          %td #{song.services.count}

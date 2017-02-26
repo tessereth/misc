@@ -2,8 +2,11 @@
 - if @last
   %h2 Service created for #{@last.date} with songs
   %ol
-    - @last.songs.each do |song|
-      %li #{song.book.acronym} #{song.number} #{song.title}
+    - @last.songs.order('service_songs.position').each do |song|
+      - if song.book
+        %li #{song.book.acronym} #{song.number} #{song.title}
+      - else
+        %li #{song.title}
 
 %h2 Enter next service
 = form_for :resource, url: '/' do |f|
@@ -11,3 +14,7 @@
   %p= f.label 'Song list'
   %p= f.text_area :body, size: '60x8'
   %p= f.submit
+
+= link_to('songs', songs_path)
+|
+= link_to('services', services_path)

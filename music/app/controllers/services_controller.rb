@@ -15,7 +15,15 @@ class ServicesController < ApplicationController
     rescue Exception => e
       flash[:alert] = e.to_s
       render :new
+      return
     end
     redirect_to new_service_path(last: s.date)
+  end
+
+  def songs
+    @cutoff = params[:cutoff].to_f
+  end
+
+  def services
   end
 end
