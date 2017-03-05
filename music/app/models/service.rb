@@ -13,12 +13,12 @@ class Service < ApplicationRecord
       if m = re.match(line)
         book = Book.find_by!(acronym: m[1].upcase)
         song = Song.find_or_create_by!(book: book, number: m[2]) do |s|
-          s.title = m[3]
+          s.title = m[3].strip
         end
         ServiceSong.create!(song: song, service: service, position: song_count)
         song_count += 1
       elsif m = nb_re.match(line)
-        song = Song.find_or_create_by!(title: m[1])
+        song = Song.find_or_create_by!(title: m[1].strip)
         ServiceSong.create!(song: song, service: service, position: song_count)
         song_count += 1
       end
