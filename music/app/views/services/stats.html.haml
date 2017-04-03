@@ -3,10 +3,13 @@
 %h1 Stats
 
 %p
-  Out of #{Service.count} services,
-  starting on #{Service.order(:date).first.date.to_formatted_s(:long)}
-  and ending on #{Service.order(:date).last.date.to_formatted_s(:long)},
-  there were #{Song.count} different songs.
+  - if Service.count > 0
+    Out of #{Service.count} services,
+    starting on #{Service.order(:date).first.date.to_formatted_s(:long)}
+    and ending on #{Service.order(:date).last.date.to_formatted_s(:long)},
+    there were #{Song.count} different songs.
+  - else
+    No services yet!
 
 %p Songs per book
 %ul
