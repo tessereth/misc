@@ -3,10 +3,13 @@
 %h1 Stats
 
 %p
-  Out of #{Service.count} services,
-  starting on #{Service.order(:date).first.date.to_formatted_s(:long)}
-  and ending on #{Service.order(:date).last.date.to_formatted_s(:long)},
-  there were #{Song.count} different songs.
+  - if Service.count > 0
+    Out of #{Service.count} services,
+    starting on #{Service.order(:date).first.date.to_formatted_s(:long)}
+    and ending on #{Service.order(:date).last.date.to_formatted_s(:long)},
+    there were #{Song.count} different songs.
+  - else
+    No services yet!
 
 %p Songs per book
 %ul
@@ -18,7 +21,7 @@
 
 %p Most frequently sung songs
 - song_counts = ServiceSong.group(:song).order('count_all DESC').count
-- min_songs = 10
+- min_songs = [song_counts.length, 10].min
 - to_count = song_counts.values[min_songs - 1]
 %ul
   - song_counts.each do |song, count|
