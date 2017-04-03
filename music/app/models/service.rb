@@ -4,8 +4,8 @@ class Service < ApplicationRecord
   has_many :service_songs, -> { order(:position) }
   has_many :songs, through: :service_songs
 
-  def self.from_email(date, body)
-    service = self.find_or_create_by!(date: date)
+  def self.from_email(date, body, congregation)
+    service = self.find_or_create_by!(date: date, congregation: congregation)
     re = /(tis|at\w\w?) (\d+) (.*)$/i
     nb_re = /NB (.*)$/i
     song_count = 1
