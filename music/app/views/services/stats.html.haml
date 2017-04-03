@@ -21,7 +21,7 @@
 
 %p Most frequently sung songs
 - song_counts = ServiceSong.group(:song).order('count_all DESC').count
-- min_songs = 10
+- min_songs = [song_counts.length, 10].min
 - to_count = song_counts.values[min_songs - 1]
 %ul
   - song_counts.each do |song, count|
