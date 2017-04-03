@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212033350) do
+ActiveRecord::Schema.define(version: 20170403142508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(version: 20170212033350) do
   create_table "books", force: :cascade do |t|
     t.string   "title"
     t.string   "acronym"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "congregations", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -34,8 +40,10 @@ ActiveRecord::Schema.define(version: 20170212033350) do
 
   create_table "services", force: :cascade do |t|
     t.date     "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "congregation_id"
+    t.index ["congregation_id"], name: "index_services_on_congregation_id", using: :btree
   end
 
   create_table "songs", force: :cascade do |t|
@@ -49,5 +57,6 @@ ActiveRecord::Schema.define(version: 20170212033350) do
 
   add_foreign_key "service_songs", "services"
   add_foreign_key "service_songs", "songs"
+  add_foreign_key "services", "congregations"
   add_foreign_key "songs", "books"
 end

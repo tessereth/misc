@@ -1,5 +1,6 @@
 class Service < ApplicationRecord
   include ActiveModel::Serializers::JSON
+  belongs_to :congregation, optional: true
   has_many :service_songs, -> { order(:position) }
   has_many :songs, through: :service_songs
 
