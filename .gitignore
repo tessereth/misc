@@ -1,3 +1,7 @@
+scripts/.num_pages
+
+### STANDARD IGNORE PATTERNS ###
+
 *.csv
 *.exe
 *.o
