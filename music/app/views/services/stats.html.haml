@@ -1,0 +1,40 @@
+= render "nav"
+
+%h1 Stats
+
+%p
+  - if Service.count > 0
+    Out of #{Service.count} services,
+    starting on #{Service.order(:date).first.date.to_formatted_s(:long)}
+    and ending on #{Service.order(:date).last.date.to_formatted_s(:long)},
+    there were #{Song.count} different songs.
+  - else
+    No services yet!
+
+%p Songs per book
+%ul
+  - Song.group(:book).order('count_all DESC').count.each do |book, count|
+    - if book
+      %li #{book.title}: #{count}
+    - else
+      %li Other: #{count}
+
+%p Most frequently sung songs
+- song_counts = ServiceSong.group(:song).order('count_all DESC').count
+- min_songs = [song_counts.length, 10].min
+- to_count = song_counts.values[min_songs - 1]
+%ul
+  - song_counts.each do |song, count|
+    - break if count < to_count
+    %li #{song.book&.acronym} #{song.number} #{song.title}: #{count}
+
+%p Proportion of songs sung a particular number of times
+- counts = song_counts.values.each_with_object(Hash.new(0)) do |count, hash|
+  - hash[count] += 1
+- total_songs = counts.values.sum
+%ul
+  %li Songs sung once: #{count_and_percent(counts[1], total_songs)}
+  %li Songs sung twice: #{count_and_percent(counts[2], total_songs)}
+  %li Songs sung three times: #{count_and_percent(counts[3], total_songs)}
+  %li Songs sung four or more times: #{count_and_percent(counts.select{|k| k>=4}.values.sum, total_songs)}
+

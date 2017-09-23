@@ -1,0 +1,16 @@
+= render 'nav'
+
+%h1 Services
+
+%p Total services: #{@services.length}
+%p First service: #{@services.first.date.to_formatted_s(:long)}
+%p Last service: #{@services.last.date.to_formatted_s(:long)}
+
+- @services.each do |service|
+  %h2 #{service.date}
+  %ol
+    - service.songs.each do |song|
+      - if song.book
+        %li #{song.book.acronym} #{song.number} #{song.title}
+      - else
+        %li #{song.title}

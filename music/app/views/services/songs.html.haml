@@ -1,0 +1,31 @@
+= render 'nav'
+
+%h1 Songs
+- @books.each do |book|
+  %h2 #{book.title}
+  %table
+    %thead
+      %tr
+        %th Num
+        %th Title
+        %th Frequency
+    %tbody
+      - book.songs.each do |song|
+        -if song.services.length >= @cutoff
+          %tr
+            %td #{song.number}
+            %td #{song.title}
+            %td #{song.services.length}
+
+%h2 Other
+%table
+  %thead
+    %tr
+      %th Title
+      %th Frequency
+  %tbody
+    - @other_songs.each do |song|
+      - if song.services.length >= @cutoff
+        %tr
+          %td #{song.title}
+          %td #{song.services.length}

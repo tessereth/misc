@@ -1,0 +1,22 @@
+= render 'nav'
+
+%h1 Music
+- if @last
+  %h2 Service created for #{@last.date} with songs
+  %ol
+    - @last.songs.order('service_songs.position').each do |song|
+      - if song.book
+        %li #{song.book.acronym} #{song.number} #{song.title}
+      - else
+        %li #{song.title}
+
+%h2 Enter next service
+= form_for :resource, url: new_service_path do |f|
+  %p= f.label :congregation_id, 'Congregation'
+  %p= f.collection_select :congregation_id, @congregations, :id, :name, :include_blank => true
+  %p= f.label :date, 'Service date'
+  %p= f.date_field :date
+  %p= f.label :body, 'Song list'
+  %p= f.text_area :body, size: '60x8'
+  %p= f.submit
+
